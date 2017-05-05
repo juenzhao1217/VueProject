@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+
+        #all {
+            width: 100%;
+            height: 100%;
+            /*border: 1px solid darkgray;*/
+        }
+
+        #top {
+            width: 100%;
+            height: 100px;
+            /*border: 1px solid darkgray;*/
+        }
+
+        #conter {
+            width: 500px;
+            height: 550px;
+            /*border: 1px solid darkgray;*/
+            margin: 0 auto;
+
+
+            background: #68c4ff;
+            position: relative;
+
+        }
+
+        #ser {
+            font-size: 56px;
+            text-align: center;
+            line-height: 150px;
+            color: white;
+            font-family: HiraMinProN-W3;
+
+        }
+        #hrs{
+            background: white;
+            height: 2px;
+            width: 400px;
+            border: none;
+            position: absolute;
+            left: 50px;
+            top: 440px;
+        }
+        #bottom1{
+            font-size: 22px;
+            color: white;
+            position: absolute;
+            left: 50px;
+            top: 460px;
+
+        }
+        #bottom2{
+            font-size: 22px;
+            color: white;
+            position: absolute;
+            left: 400px;
+            top: 460px;
+
+        }
+        #move{
+            position: absolute;
+            left:30px;
+        }
+        #text-1{
+
+
+            display: inline-block;
+            height:40px;
+            width:400px;
+            padding: 10px 20px 10px 20px;
+            margin:3px auto;
+            line-height: 45px;
+            background-color: #ff6cd1;
+            font-size: 24px;
+            color: white;
+
+        }
+        #text-1 span{
+            float: right;
+        }
+        #text-1:hover{
+            cursor: pointer;
+        }
+
+        .bianColor{
+            background: gold !important;
+        }
+        .textColor{
+            color: #98ffd4 !important;
+        }
+    </style>
+</head>
+<body>
+
+
+
+<div id="all">
+    <div id="top"></div>
+    <div id="conter">
+        <p id="ser">Services</p>
+        <div id="move">
+        <div v-for="(item,index) in items" @click="clicked(item.price,index)" :class="{bianColor:item.active}" id="text-1">{{item.name}}
+            <span  :class="{textColor:item.price}">{{item.price}}</span>
+        </div>
+        </div>
+        <hr id="hrs">
+        <p id="bottom1">Total:</p>
+        <p id="bottom2">{{sum|money}}</p>
+    </div>
+
+</div>
+
+<script>
+    var services = [
+        {
+            name: 'Web Development',
+            price: 300,
+            active:false
+        },{
+            name: 'Design',
+            price: 400,
+            active:false
+        },{
+            name: 'Integration',
+            price: 250,
+            active:false
+        },{
+            name: 'Training',
+            price: 220,
+            active:false
+        }
+    ];
+    Vue.filter('money',function (sum) {
+        return '¥'+sum;
+    });
+    var vm= new Vue({
+        el:'#all',
+        data:{
+            items: services,
+            sum:0
+
+        },
+
+        methods:{
+            clicked:function (price,index) {
+
+                this.items[index].active=!this.items[index].active;
+                if(this.items[index].active==true){
+                    this.sum+=price;
+                }else {
+                    this.sum-=price;
+                }
+            }
+        }
+    })
+
+
+</script>
+
+</body>
+</html>
